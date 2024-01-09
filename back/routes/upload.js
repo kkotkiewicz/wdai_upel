@@ -26,12 +26,13 @@ router.post('/', upload.single('file'), function(req, res){
     req.file.buffer
     const extention = req.file.originalname.split('.').pop();
     const fileName = Date.now() + '.' + extention;
-    const link = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
+    const link = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileName}`;
 
     const params = {
         Bucket: bucketName,
         Key: fileName,
         Body: req.file.buffer,
+        ACL: 'public-read',
         ContentType: req.file.mimetype,
     }
 
