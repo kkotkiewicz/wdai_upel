@@ -1,9 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const User = require("./UserModel");
+const User = require("../models/User");
+const mongooseConnect = require("../lib/mongoose");
 
 const verifyToken = (req, res, next) => {
   const token = req.header("Authorization");
@@ -19,41 +19,57 @@ const verifyToken = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if (!req.user || req.user.user_role !== true) {
-    return res.status(403).json({ message: "Brak uprawnień administratora" });
-  }
-  next();
+  mongooseConnect();
+  const decodedPayload = jwt.decode(req.header("Authorization"));
+
+  const userId = decodedPayload.user.id;
+
+  User.findById(userId)
+    .then(user => {
+      if (!user || user.user_role !== true) {
+        return res.status(403).json({ message: "Brak uprawnień administratora" });
+      }
+      next();    
+    })
+    .catch(err => {
+      return res.status(403).json({ message: "Brak uprawnień administratora" });
+    });
 };
 
 router.post("/login", async (req, res) => {
-try {
+  try {
+    mongooseConnect();
     const { user_email, user_password } = req.body;
 
-    const user = await User.findOne({ user_email });
+    const user = await User.findOne({ user_email: user_email });
     if (!user) {
-    return res.status(401).json({ message: "Nieprawidłowy adres e-mail lub hasło" });
+      return res.status(401).json({ message: "Nieprawidłowy adres e-mail lub hasło" });
     }
 
     const passwordMatch = await bcrypt.compare(user_password, user.user_password);
     if (!passwordMatch) {
-    return res.status(401).json({ message: "Nieprawidłowy adres e-mail lub hasło" });
+      return res.status(401).json({ message: "Nieprawidłowy adres e-mail lub hasło" });
     }
 
     const token = jwt.sign({ user: { id: user._id } }, "wdai_project", { expiresIn: "1h" });
 
-    res.status(200).json({ message: "Logowanie udane", token });
-} catch (error) {
+    res.status(200).json({ message: "Logowanie udane", token: token });
+  } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Wystąpił błąd podczas logowania" });
-}
+  }
 });
 
 router.post("/register", async (req, res) => {
 try {
-    const { user_firstname, user_lastname, user_email, user_password } = req.body;
+    mongooseConnect();
+    const user_firstname = req.body.user_firstname;
+    const user_lastname = req.body.user_lastname;
+    const user_email = req.body.user_email;
+    const user_password = req.body.user_password;
 
-    const existingUser = await User.findOne({ user_email });
-    if (existingUser) {
+    const existingUser = await User.find({ user_email: user_email });
+    if (existingUser.length !== 0) {
     return res.status(400).json({ message: "Użytkownik o tym adresie e-mail już istnieje" });
     }
 
@@ -75,8 +91,9 @@ try {
 }
 });
 
-router.get("/", verifyToken, isAdmin, async (req, res) => {
+router.get("", verifyToken, isAdmin, async (req, res) => {
   try {
+    mongooseConnect();
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
@@ -87,6 +104,7 @@ router.get("/", verifyToken, isAdmin, async (req, res) => {
 
 router.get("/:id", verifyToken, async (req, res) => {
   try {
+    mongooseConnect();
     const { id } = req.params;
 
     const user = await User.findById(id);
@@ -107,6 +125,7 @@ router.get("/:id", verifyToken, async (req, res) => {
 
 router.put("/:id", verifyToken, async (req, res) => {
   try {
+    mongooseConnect();
     const { id } = req.params;
 
     const user = await User.findById(id);
@@ -134,6 +153,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 
 router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
   try {
+    mongooseConnect();
     const { id } = req.params;
 
     const user = await User.findById(id);
