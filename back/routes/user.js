@@ -174,3 +174,194 @@ router.delete("/:id", verifyToken, isAdmin, async (req, res) => {
 });
 
 module.exports = router;
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: API for managing user authentication, registration, and administration. All endpoints (except register) require Authentication.
+ * /user/login:
+ *   post:
+ *     summary: Authenticate user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_email:
+ *                 type: string
+ *               user_password:
+ *                 type: string
+ *             required:
+ *               - user_email
+ *               - user_password
+ *     responses:
+ *       200:
+ *         description: User authenticated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ *       401:
+ *         description: Invalid email or password
+ *       500:
+ *         description: Internal server error
+ * /user/register:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_firstname:
+ *                 type: string
+ *               user_lastname:
+ *                 type: string
+ *               user_email:
+ *                 type: string
+ *               user_password:
+ *                 type: string
+ *             required:
+ *               - user_firstname
+ *               - user_lastname
+ *               - user_email
+ *               - user_password
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: User with this email already exists
+ *       500:
+ *         description: Internal server error
+ * /user:
+ *   get:
+ *     summary: Get all users (Admin only)
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: List of all users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Internal server error
+ * /user/{id}:
+ *   get:
+ *     summary: Get user by ID (Admin only for other users than user sending request)
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User details by ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       403:
+ *         description: Insufficient permissions to view user details
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ *   put:
+ *     summary: Update user details by ID (Admin only for other users than user sending request)
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: User details updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       403:
+ *         description: Insufficient permissions to update user details
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ *   delete:
+ *     summary: Delete user by ID (Admin only)
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       403:
+ *         description: Insufficient permissions to delete user
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         user_firstname:
+ *           type: string
+ *         user_lastname:
+ *           type: string
+ *         user_email:
+ *           type: string
+ *         user_photo:
+ *           type: string
+ *         user_role:
+ *           type: boolean
+ *       required:
+ *         - user_firstname
+ *         - user_lastname
+ *         - user_email
+ *         - user_role
+ */

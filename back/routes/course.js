@@ -38,30 +38,87 @@ const isAdmin = (req, res, next) => {
     });
 };
 
-router.get("", async (req, res) => {
-  try {
-    mongooseConnect();
-    const courses = await Course.find();
-    res.status(200).json(courses);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Wystąpił błąd podczas pobierania kursów" });
-  }
+router.get("", (req, res) => {
+  mongooseConnect()
+    .then(() => Course.find())
+    .then(courses => {
+      const coursesPromises = courses.map(course =>
+        Comment.find({ course: course._id }).populate("user")
+          .then(comments => {
+            const commentsArray = comments.map(comment => ({
+              userId: comment.user,
+              commentId: comment._id,
+              name: comment.user.user_firstname + " " + comment.user.user_lastname,
+              text: comment.text
+            }));
+
+            course.comments = commentsArray;
+
+            return Rating.find({ course: course._id })
+              .then(ratings_all => {
+                const ratings = ratings_all.map(rating => rating.rating);
+                const course_res = {...course, rating_avg: 0};
+                if (ratings.length === 0) {
+                  course_res.rating_avg = 0;
+                }
+                else {
+                  const sum = ratings.reduce((acc, rating) => acc + rating, 0);
+                  course_res.rating_avg = sum / ratings.length;
+                }
+                return {...course_res._doc, rating_avg: course_res.rating_avg};
+              });
+          })
+      );
+
+      return Promise.all(coursesPromises);
+    })
+    .then(coursesWithRatings => res.status(200).json(coursesWithRatings))
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ message: "Wystąpił błąd podczas pobierania kursów" });
+    });
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    mongooseConnect();
-    const { id } = req.params;
-    const course = await Course.findById(id).populate("comments").populate("ratings");
-    if (!course) {
-      return res.status(404).json({ message: "Kurs nie znaleziony" });
-    }
-    res.status(200).json(course);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Wystąpił błąd podczas pobierania kursu" });
-  }
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  mongooseConnect()
+    .then(() => Course.findById(id).populate("comments").populate("ratings"))
+    .then(course => {
+      if (!course) {
+        return res.status(404).json({ message: "Kurs nie znaleziony" });
+      }
+
+      return Comment.find({ course: id }).populate("user")
+        .then(comments => {
+          const commentsArray = comments.map(comment => ({
+            userId: comment.user,
+            commentId: comment._id,
+            name: comment.user.user_firstname + " " + comment.user.user_lastname,
+            text: comment.text
+          }));
+
+          course.comments = commentsArray;
+
+          return Rating.find({ course: id })
+            .then(ratings_all => {
+              const course_res = {...course, rating_avg: 0};
+              const ratings = ratings_all.map(rating => rating.rating);
+              if (ratings.length === 0) {
+                course_res.rating_avg = 0;
+              }
+
+              const sum = ratings.reduce((acc, rating) => acc + rating, 0);
+              course_res.rating_avg = sum / ratings.length;
+
+              res.status(200).json({...course_res._doc, rating_avg: course_res.rating_avg});
+            });
+        });
+    })
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ message: "Wystąpił błąd podczas pobierania kursu" });
+    });
 });
 
 router.post("/:id/comments", verifyToken, async (req, res) => {
@@ -197,3 +254,299 @@ router.delete("/:id", isAdmin, verifyToken, async (req, res) => {
 });
 
 module.exports = router;
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Course
+ *   description: API for managing courses, comments, and ratings
+ * /course/{id}:
+ *   get:
+ *     summary: Get course details by ID with comments and ratings
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     responses:
+ *       200:
+ *         description: Course details with comments and ratings
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Course'
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ *   put:
+ *     summary: Update course details by ID
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Course'
+ *     responses:
+ *       200:
+ *         description: Course details updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Course'
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ *   delete:
+ *     summary: Delete course by ID
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     responses:
+ *       200:
+ *         description: Course deleted successfully
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ * /course/{id}/comments:
+ *   post:
+ *     summary: Add a new comment to a course by ID
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *             required:
+ *               - text
+ *     responses:
+ *       201:
+ *         description: Comment added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 comment:
+ *                   $ref: '#/components/schemas/Comment'
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ * /course/{id}/ratings:
+ *   post:
+ *     summary: Add or update the rating for a course by ID
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               rating:
+ *                 type: number
+ *             required:
+ *               - rating
+ *     responses:
+ *       201:
+ *         description: Rating added or updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 rating:
+ *                   $ref: '#/components/schemas/Rating'
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ * /course:
+ *   get:
+ *     summary: Get all courses with comments and ratings
+ *     tags: [Courses]
+ *     responses:
+ *       200:
+ *         description: List of courses with comments and ratings
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Course'
+ *       500:
+ *         description: Internal server error
+ *   post:
+ *     summary: Create a new course (Admin only)
+ *     tags: [Courses]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Course'
+ *     responses:
+ *       201:
+ *         description: Course added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 course:
+ *                   $ref: '#/components/schemas/Course'
+ *       500:
+ *         description: Internal server error
+ *   put:
+ *     summary: Update course details by ID (Admin only)
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Course'
+ *     responses:
+ *       200:
+ *         description: Course details updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Course'
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ *   delete:
+ *     summary: Delete course by ID (Admin only)
+ *     tags: [Courses]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Course ID
+ *     responses:
+ *       200:
+ *         description: Course deleted successfully
+ *       404:
+ *         description: Course not found
+ *       500:
+ *         description: Internal server error
+ * components:
+ *   schemas:
+ *     Course:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         course_name:
+ *           type: string
+ *         course_description:
+ *           type: string
+ *         course_photos:
+ *           type: array
+ *           items:
+ *             type: string
+ *         course_category:
+ *           type: string
+ *         course_price:
+ *           type: number
+ *         comments:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Comment'
+ *         ratings:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Rating'
+ *         rating_avg:
+ *           type: number
+ *       required:
+ *         - course_name
+ *         - course_description
+ *         - course_category
+ *         - course_price
+ *     Comment:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         user:
+ *           type: string
+ *         course:
+ *           type: string
+ *         text:
+ *           type: string
+ *       required:
+ *         - user
+ *         - course
+ *         - text
+ *     Rating:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         user:
+ *           type: string
+ *         course:
+ *           type: string
+ *         rating:
+ *           type: number
+ *       required:
+ *         - user
+ *         - course
+ *         - rating
+ */
