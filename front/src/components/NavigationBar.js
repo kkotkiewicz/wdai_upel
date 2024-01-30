@@ -1,6 +1,6 @@
 import React from 'react';
-import './NavigationBar.css';
-import logo from './images/logo.png';
+import '../styles/components/NavigationBar.css';
+import logo from '../images/logo.png';
 export const NavigationBar = ({activeSite}) => {
     return (
         <div className="navigation-bar">

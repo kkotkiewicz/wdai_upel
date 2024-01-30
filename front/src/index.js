@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import CoursesPage from "./CoursesPage";
+import CoursesPage from "../src/pages/CoursesPage";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

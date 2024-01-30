@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import './CoursesPage.css';
-import './CourseList.css';
-import { CourseList } from './CourseList';
-import { NavigationBar } from './NavigationBar';
+import '../styles/pages/CoursesPage.css';
+import '../styles/components/CourseList.css';
+import { CourseList } from '../components/CourseList';
+import { NavigationBar } from '../components/NavigationBar';
+
 function Courses() {
     const [courses, setCourses] = useState([]);
     const [filteredCourses, setFilteredCourses] = useState([]);
@@ -11,6 +12,7 @@ function Courses() {
     const [showFilters, setShowFilters] = useState(false);
     const [lowerPriceFilter, setLowerPriceFilter] = useState(0);
     const [higherPriceFilter, setHigherPriceFilter] = useState(999);
+
     const fetchCourses = () => {
         fetch('http://localhost:3000/course')
             .then(response => response.json())
@@ -20,9 +22,11 @@ function Courses() {
     useEffect(() => {
         fetchCourses();
     }, []);
+
     useEffect(() => {
         setFilteredCourses(courses);
     }, [courses]);
+
     const openFilters = () => {
         setShowFilters(true);
     };
