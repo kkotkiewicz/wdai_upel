@@ -1,0 +1,85 @@
+.list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.list-element {
+    display: flex;
+    flex-direction: row;
+    width: 46.84%;
+    height: 180px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: #797777;
+    border-radius: 20px;
+}
+.list-element img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+.list-element-img {
+    width: 50%;
+    height: 100%;
+}
+.list-element-info {
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    margin-left: 10px;
+    font-family: 'Teko', sans-serif;
+}
+.list-element-info h3 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+}
+.list-element-info p {
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 0;
+}
+.list-element-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 20%;
+    margin-top: 10px;
+}
+.rating-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+.rating-wrapper p {
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 4px;
+}
+.list-element-button {
+    background-color: rgba(128, 128, 128, 0.39);
+    border: 2px solid goldenrod;
+    border-radius: 25px;
+    box-shadow: goldenrod 3px 3px 0 0;
+    color: goldenrod;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Teko', sans-serif;
+    font-weight: 200;
+    font-size: 24px;
+    padding: 2px 12px;
+    line-height: 25px;
+    text-align: center;
+    text-decoration: none;
+}
+.list-element-button:hover {
+    background-color: #fff;
+}
