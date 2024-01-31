@@ -43,8 +43,8 @@ export const PromoBannerComponent = () => {
 
     return (
         <div className="promo-banner">
-            <h1>Ostatni dzień niższych cen!</h1>
-            <p>Kursy zapewniające każdą umiejętność podczas Twojej przygody z nauką – już od 44,99 zł. Promocja kończy się dzisiaj.</p>
+            <h1>Powiększ swoje kompetencje nawet do 50%<span className="warning">(ostrożnie)</span>!</h1>
+            <p>Kursy zapewniające każdą umiejętność – już od 44,99 zł. Promocja kończy się dzisiaj.</p>
             <div className="countdown-timer">
                 <span>{countdown.hours}</span>:<span>{countdown.minutes}</span>:<span>{countdown.seconds}</span>
             </div>

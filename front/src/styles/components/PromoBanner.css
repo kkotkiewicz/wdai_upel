@@ -1,3 +1,7 @@
+.warning {
+    color: red;
+}
+
 .promo-banner {
     background-image: url("../../images/chalkboard.jpg");
     color: white;
