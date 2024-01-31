@@ -123,6 +123,21 @@ router.get("/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/current", verifyToken, async (req, res) => {
+    try {
+      const token = req.header("Authorization");
+      const decoded = jwt.verify(token, "wdai_project");
+      const user = decoded.user;
+      mongooseConnect();
+      const id = user._id;
+      const userInfo = await User.findById(id);
+      res.status(200).json(userInfo);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Wystąpił błąd podczas pobierania użytkownika" });
+    }
+})
+
 router.put("/:id", verifyToken, async (req, res) => {
   try {
     mongooseConnect();
