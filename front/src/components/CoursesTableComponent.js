@@ -47,28 +47,28 @@ const courses = [
         image: courseImage3, // You need to import this image at the top of your file
         bestseller: false,
     },
-    {
-        id: 4,
-        title: 'Kurs Python w Pigulce od Podstaw do Mastera',
-        instructor: 'EduTago',
-        rating: 4.8,
-        reviews: 74,
-        price: '44,99 zł',
-        originalPrice: '199,99 zł',
-        image: courseImage4, // You need to import this image at the top of your file
-        bestseller: false,
-    },
-    {
-        id: 5,
-        title: 'Zaawansowany Python w Praktyce',
-        instructor: 'Aneta Mikulik',
-        rating: 4.9,
-        reviews: 890,
-        price: '54,99 zł',
-        originalPrice: '279,99 zł',
-        image: courseImage5, // You need to import this image at the top of your file
-        bestseller: true,
-    },
+    // {
+    //     id: 4,
+    //     title: 'Kurs Python w Pigulce od Podstaw do Mastera',
+    //     instructor: 'EduTago',
+    //     rating: 4.8,
+    //     reviews: 74,
+    //     price: '44,99 zł',
+    //     originalPrice: '199,99 zł',
+    //     image: courseImage4, // You need to import this image at the top of your file
+    //     bestseller: false,
+    // },
+    // {
+    //     id: 5,
+    //     title: 'Zaawansowany Python w Praktyce',
+    //     instructor: 'Aneta Mikulik',
+    //     rating: 4.9,
+    //     reviews: 890,
+    //     price: '54,99 zł',
+    //     originalPrice: '279,99 zł',
+    //     image: courseImage5, // You need to import this image at the top of your file
+    //     bestseller: true,
+    // },
     {
         id: 6,
         title: 'Python i Big Data - Analiza Danych',
@@ -91,17 +91,17 @@ const courses = [
         image: courseImage7, // You need to import this image at the top of your file
         bestseller: true,
     },
-    {
-        id: 8,
-        title: 'Web Scraping z Pythonem - Kompletny Kurs',
-        instructor: 'Tomasz Dobosz',
-        rating: 4.8,
-        reviews: 678,
-        price: '39,99 zł',
-        originalPrice: '219,99 zł',
-        image: courseImage8, // You need to import this image at the top of your file
-        bestseller: false,
-    }
+    // {
+    //     id: 8,
+    //     title: 'Web Scraping z Pythonem - Kompletny Kurs',
+    //     instructor: 'Tomasz Dobosz',
+    //     rating: 4.8,
+    //     reviews: 678,
+    //     price: '39,99 zł',
+    //     originalPrice: '219,99 zł',
+    //     image: courseImage8, // You need to import this image at the top of your file
+    //     bestseller: false,
+    // }
 ];
 
 export const CoursesTableComponent = () => {
@@ -112,7 +112,7 @@ export const CoursesTableComponent = () => {
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000, // Autoplay speed set to 10 seconds
+        autoplaySpeed: 3000,
         responsive: [
             {
                 breakpoint: 1024,

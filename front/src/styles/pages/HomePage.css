@@ -1,4 +1,5 @@
 .scrollable-container {
     height: 100vh; /* or any other fixed height */
     overflow-y: auto; /* enables vertical scroll */
+    background-image: url("../../images/logo.png");
 }

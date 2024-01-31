@@ -8,15 +8,12 @@ import "../styles/pages/HomePage.css"
 const HomePage = () => {
     return (
         <div className="background-img">
-
             <div className="scrollable-container">
                 <NavigationBar activeSite={"HomePage"}/>
                 <PromoBannerComponent/>
                 <div className=".main-content"><CoursesTableComponent/></div>
                 <LogoSectionComponent/>
             </div>
-
-
         </div>
     )
 }
