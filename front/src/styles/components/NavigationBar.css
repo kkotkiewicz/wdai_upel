@@ -1,6 +1,9 @@
+body {
+    margin: 0;
+}
+
 .navigation-bar {
     display: flex;
-    width: 100%;
     padding: 0.5rem;
     height: 55px;
     background-color: #2a2828;
@@ -8,10 +11,11 @@
     border-top: 2px solid #4d4c4a;
     border-bottom: 2px solid #4d4c4a;
     position: sticky;
-    overflow: auto;
     top: 0;
     font-family: 'Teko', sans-serif;
     z-index: 5;
+    justify-content: space-between;
+    align-content: center;
 }
 .logo {
     margin-left: 2vw;
@@ -21,25 +25,28 @@
     width: 250px;
     height: auto;
 }
-.navigation-bar a {
+.navigation-bar div {
     font-size: 1.8rem;
     text-decoration: none;
     height: 100%;
-    min-width: 10vw;
-    max-width: 20vw;
     line-height: 200%;
     color: lightgray;
     margin: 0;
     padding: 0;
     border-radius: 20px;
 }
-.navigation-bar a:hover {
+.navigation-bar div:hover {
     background-color: lightgray;
     color: black;
     font-weight: bold;
     transition: 0.3s ease;
 }
-.navigation-bar a.active {
+
+#user-cart{
+    background-color: #2a2828;
+}
+
+.navigation-bar div.active {
     border-bottom: 3px solid goldenrod;
 }
 .user {
