@@ -39,3 +39,7 @@ export async function register(user_name, user_lastname, user_email, user_passwo
 export function logout() {
   localStorage.removeItem('token');
 }
+
+export function getToken() {
+  return localStorage.getItem('token');
+}

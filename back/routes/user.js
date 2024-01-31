@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Nieprawidłowy adres e-mail lub hasło" });
     }
 
-    const passwordMatch = await bcrypt.compare(user_password, user.user_password);
+    const passwordMatch = bcrypt.compare(user_password, user.user_password);
     if (!passwordMatch) {
       return res.status(401).json({ message: "Nieprawidłowy adres e-mail lub hasło" });
     }
