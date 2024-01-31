@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { AuthGuardComponent } from '../components/AuthGuardComponent';
 
 const TestPage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -31,15 +30,12 @@ const TestPage = () => {
   };
 
   return (
-    <AuthGuardComponent>
       <>
         <form onSubmit={handleFormSubmit}>
           <input type="file" onChange={handleFileInputChange} />
           <button type="submit">Upload</button>
         </form>
       </>
-    </AuthGuardComponent>
-    
   );
 }
 
