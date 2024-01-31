@@ -321,11 +321,42 @@ router.delete("/:id/ratings", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/:id/photos", isAdmin, verifyToken, async (req, res) => {
+  try {
+    mongooseConnect();
+    const { id, photo_url } = req.params;
+
+    const course = await Course.findById(id);
+    if (!course) {
+      return res.status(404).json({ message: "Kurs nie znaleziony" });
+    }
+    course.course_photos.push(photo_url);
+    await course.save();
+
+    return res.status(201).json({ message: "Zdjęcie dodane", photo: photo_url });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Wystąpił błąd podczas dodawania zdjęcia" });
+  }
+})
+
 router.post("", isAdmin, verifyToken, async (req, res) => {
   try {
     mongooseConnect();
 
-    const newCourse = new Course(req.body);
+    const { course_name, course_description, course_photos, course_category, course_price } = req.body;
+
+    const courseInfo = {
+      course_name: course_name,
+      course_description: course_description,
+      course_photos: course_photos,
+      course_category: course_category,
+      course_price: course_price,
+      comments: [],
+      ratings: []
+    }
+    
+    const newCourse = new Course(courseInfo);
     const savedCourse = await newCourse.save();
 
     res.status(201).json({ message: "Kurs dodany", course: savedCourse });
