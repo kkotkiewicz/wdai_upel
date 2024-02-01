@@ -44,25 +44,16 @@ function Courses() {
         setFilteredCourses(newFilteredCourses);
         closeFilters();
     };
-
-    const addCourse = () => {
-        const cours = ({
-            id: 13143124,
-            course_name: "Kurs 1",
-            course_description: "Opis kursu 1",
-            course_photos: "https://www.w3schools.com/howto/img_avatar.png",
-            course_category: "Kategoria 1",
-            course_price: 100,
-            rating_avg: 4.6,
-        });
-        const data = courses;
-        data.push(cours);
-        setCourses(data);
-    };
-
-    useEffect(() => {
-        addCourse();
-    });
+    const handleSearch = (e) => {
+        if(e.target.value === "") {
+            setSearch("");
+            setFilteredCourses(courses);
+        } else {
+            setSearch(e.target.value);
+            const searchedCourses = courses.filter(course => course.course_name.toLowerCase().includes(search.toLowerCase()));
+            setFilteredCourses(searchedCourses);
+        }
+    }
 
     return (
         <>
@@ -71,7 +62,7 @@ function Courses() {
             <div className="Courses">
                 <div className="search-bar">
                     <p> Wyszukaj: </p>
-                    <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                    <input type="text" value={search} onChange={(e) => handleSearch(e)}/>
                     <button className={"filter-button"} onClick={openFilters}> Filtry </button>
                     {showFilters && (
                         <div className={"filters"}>
@@ -80,8 +71,15 @@ function Courses() {
                                 <p> Wybierz kategorię: </p>
                                 <select value={filter} onChange={(e) => setFilter(e.target.value)}>
                                     <option value="">Wszystkie kategorie</option>
-                                    <option value="Programming">Programming</option>
-                                    <option value="category2">Kategoria 2</option>
+                                    <option value="Informatyka">Informatyka</option>
+                                    <option value="Psychologia">Psychologia</option>
+                                    <option value="Kulinaria">Kulinaria</option>
+                                    <option value="Języki">Języki</option>
+                                    <option value="Sztuka">Sztuka</option>
+                                    <option value="Finanse">Finanse</option>
+                                    <option value="Fotografia">Fotografia</option>
+                                    <option value="Matematyka">Matematyka</option>
+                                    <option value="Design">Design</option>
                                 </select>
                             </div>
                             <p> Wybierz przedział cenowy:</p>

@@ -8,13 +8,22 @@
     display: flex;
     flex-direction: row;
     width: 46.84%;
-    height: 180px;
+    height: 200px;
     border: 1px solid #ccc;
     padding: 10px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     background-color: #797777;
     border-radius: 20px;
 }
+.list-element-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
 .list-element img {
     width: 100%;
     height: 100%;
@@ -28,28 +37,28 @@
     color: whitesmoke;
     display: flex;
     flex-direction: column;
-    width: 50%;
-    height: 100%;
+    width: 100%;
+    height: 80%;
     margin-left: 10px;
     font-family: 'Teko', sans-serif;
 }
 .list-element-info h3 {
-    font-size: 2rem;
+    font-size: 1.5vw;
     margin: 0;
     padding: 0;
 }
 .list-element-info p {
-    font-size: 1.4rem;
+    font-size: 1.1vw;
     margin: 0;
     padding: 0;
 }
 .list-element-footer {
     display: flex;
     flex-direction: row;
+    margin-left: 10px;
     justify-content: space-between;
-    width: 100%;
+    width: 95%;
     height: 20%;
-    margin-top: 10px;
 }
 .rating-wrapper {
     position: relative;
