@@ -3,6 +3,7 @@ import '../styles/pages/CoursesPage.css';
 import '../styles/components/CourseList.css';
 import { CourseList } from '../components/CourseList';
 import { NavigationBar } from '../components/NavigationBar';
+import { getAllCourses } from "../services/courseService"
 
 function Courses() {
     const [courses, setCourses] = useState([]);
@@ -13,14 +14,10 @@ function Courses() {
     const [lowerPriceFilter, setLowerPriceFilter] = useState(0);
     const [higherPriceFilter, setHigherPriceFilter] = useState(999);
 
-    const fetchCourses = () => {
-        fetch('http://localhost:3000/course')
-            .then(response => response.json())
-            .then(data => setCourses(data))
-            .catch(err => console.error(err))
-    }
     useEffect(() => {
-        fetchCourses();
+        getAllCourses().then(data => {
+            setCourses(data)
+        })
     }, []);
 
     useEffect(() => {
@@ -45,24 +42,6 @@ function Courses() {
         closeFilters();
     };
 
-    const addCourse = () => {
-        const cours = ({
-            id: 13143124,
-            course_name: "Kurs 1",
-            course_description: "Opis kursu 1",
-            course_photos: "https://www.w3schools.com/howto/img_avatar.png",
-            course_category: "Kategoria 1",
-            course_price: 100,
-            rating_avg: 4.6,
-        });
-        const data = courses;
-        data.push(cours);
-        setCourses(data);
-    };
-
-    useEffect(() => {
-        addCourse();
-    });
 
     return (
         <>

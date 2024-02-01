@@ -1,6 +1,9 @@
 import React from 'react';
 import {Rating} from './Rating';
+import { useNavigate } from 'react-router-dom';
 export const CourseList = ({ courseData }) => {
+    const navigate = useNavigate();
+
     return (
         <div className="list-element">
             <div className="list-element-img">
@@ -13,10 +16,10 @@ export const CourseList = ({ courseData }) => {
                 <p>Cena: {courseData.course_price}</p>
                 <div className={"list-element-footer"}>
                     <div className={"list-element-rating"}>
-                        <Rating averageRating={courseData.rating_avg} />
+                        <Rating averageRating={courseData.rating} />
                     </div>
                     <div className={"list-element-buttons"}>
-                        <button className={"list-element-button"}>Szczegóły</button>
+                        <button className={"list-element-button"} onClick={() => navigate(`/courses/${courseData._id}`)}>Szczegóły</button>
                     </div>
                 </div>
             </div>

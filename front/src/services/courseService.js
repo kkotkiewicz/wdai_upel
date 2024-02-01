@@ -23,11 +23,12 @@ export async function getCourseById(courseId) {
     }
 }
 
-export async function addNewCourse(course_name, course_description, course_photos, course_category, course_price) {
+export async function addNewCourse(course_name, course_description, course_instructor, course_photos, course_category, course_price) {
     try {
         const response = await axios.post(`${courseEndpointUrl}`, {
             course_name: course_name,
             course_description: course_description,
+            course_instructor: course_instructor,
             course_photos: course_photos,
             course_category: course_category,
             course_price: course_price
