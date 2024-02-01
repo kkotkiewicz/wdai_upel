@@ -65,7 +65,7 @@ router.get("", (req, res) => {
                   const sum = ratings.reduce((acc, rating) => acc + rating, 0);
                   course_res.rating_avg = sum / ratings.length;
                 }
-                return {...course_res._doc, rating_avg: course_res.rating_avg, comments_text: commentsArray};
+                return {...course_res._doc, rating: course_res.rating_avg, comments_text: commentsArray};
               });
           })
       );
@@ -111,7 +111,7 @@ router.get("/:id", (req, res) => {
               const sum = ratings.reduce((acc, rating) => acc + rating, 0);
               course_res.rating_avg = sum / ratings.length;
 
-              res.status(200).json({...course_res._doc, rating_avg: course_res.rating_avg, comments_text: commentsArray});
+              res.status(200).json({...course_res._doc, rating: course_res.rating_avg, comments_text: commentsArray});
             });
         });
     })
@@ -344,11 +344,12 @@ router.post("", isAdmin, verifyToken, async (req, res) => {
   try {
     mongooseConnect();
 
-    const { course_name, course_description, course_photos, course_category, course_price } = req.body;
+    const { course_name, course_description, course_instructor, course_photos, course_category, course_price } = req.body;
 
     const courseInfo = {
       course_name: course_name,
       course_description: course_description,
+      course_instructor: course_instructor,
       course_photos: course_photos,
       course_category: course_category,
       course_price: course_price,

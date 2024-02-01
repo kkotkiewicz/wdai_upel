@@ -13,12 +13,13 @@ const RatingSchema = new Schema({
 
 const CourseSchema = new Schema({
   course_name: String,
+  course_instructor: String,
   course_description: String,
   course_photos: [{ type: String }],
   course_category: String,
   course_price: Number,
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  ratings: [{ type: Schema.Types.ObjectId, ref: "Rating", unique: true }],
+  ratings: [{ type: Schema.Types.ObjectId, ref: "Rating"}],
 }, {
   timestamps: true,
 });
