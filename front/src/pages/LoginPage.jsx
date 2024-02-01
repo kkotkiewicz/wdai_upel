@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import "../styles/pages/LoginPage.css"
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,13 +24,13 @@ const LoginPage = () => {
     <div className="login-page">
       <div className='login-form'>
         <h1>Login</h1>
-        <input
+        <input className="Email"
           type="text"
           placeholder="Email"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
         />
-        <input
+        <input className="Password"
           type="password"
           placeholder="Password"
           value={userPassword}

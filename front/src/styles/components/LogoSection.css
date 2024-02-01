@@ -1,0 +1,105 @@
+#HomePage {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Use viewport height to ensure full height */
+}
+
+/* If you have a main content wrapper inside your App component, apply flex-grow to it */
+.main-content {
+    flex-grow: 1; /* This will push the footer down */
+}
+
+.options {
+    display: flex;
+    gap: 10px;
+}
+
+.footer {
+    background-color: #333; /* Dark background for the footer */
+    color: #fff; /* White text color */
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-content {
+    width: 100%; /* Maximum width of the content */
+}
+
+.footer-content p {
+    margin: 0 0 20px; /* Space between text and logos */
+}
+
+.logos-container {
+    display: flex; /* Align logos horizontally */
+    justify-content: center; /* Center logos horizontally */
+    /*flex-wrap: wrap; !* Allow logos to wrap on small screens *!*/
+    margin-bottom: 20px; /* Space between logos and copyright */
+}
+
+.logo-container {
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.company-logo {
+    max-width: 100px; /* Adjust as necessary for your design */
+    max-height: 50px;
+    object-fit: contain;
+}
+
+.footer-bottom {
+    font-size: 0.75em; /* Smaller font size for copyright text */
+    margin-top: 20px; /* Space above the copyright text */
+}
+
+/* Base styles for the logo section */
+.logo-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.logos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Adjust the space between logos */
+}
+
+.logo-container {
+    flex: 0 1 20%; /* Adjust the base size of logo containers */
+}
+
+.company-logo {
+    max-width: 100%;
+    height: auto; /* Ensure logos maintain aspect ratio */
+}
+
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    .logo-container {
+        flex: 0 1 33.33%; /* 3 logos per row */
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+    .logo-container {
+        flex: 0 1 50%; /* 2 logos per row */
+    }
+}
+
+/* Extra small devices (phones, less than 576px) */
+@media (max-width: 576px) {
+    .logo-container {
+        flex: 0 1 100%; /* 1 logo per row */
+    }
+}
+
