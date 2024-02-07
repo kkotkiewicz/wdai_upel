@@ -13,7 +13,7 @@ const UserCourses = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3000/user/${id}`);
+                const response = await axios.get(`http://localhost:3000/course`);
                 setCourses(response.data);
                 setLoading(false);
             } catch (error) {
