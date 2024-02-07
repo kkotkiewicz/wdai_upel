@@ -1,0 +1,45 @@
+/* AddNewCourse.css */
+.add-course-form {
+    font-family: 'Teko', sans-serif;
+    color: whitesmoke;
+    background-color: rgba(0,0,0, 0.4); /* Semi-transparent black */
+    padding: 20px;
+    border-radius: 8px;
+    margin: auto;
+    width: 70%;
+}
+
+.add-course-form input,
+.add-course-form textarea {
+    color: whitesmoke;
+    background-color: #797777; /* Gray background */
+    border: 2px solid #494949; /* Dark gray border */
+    font-size: 1.5rem;
+    margin: 1vw 0;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.add-course-form button {
+    background-color: rgba(128, 128, 128, 0.39);
+    border: 2px solid goldenrod;
+    border-radius: 25px;
+    box-shadow: goldenrod 3px 3px 0 0;
+    color: goldenrod;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 32px;
+    padding: 4px 40px;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 1rem auto;
+}
+
+.add-course-form .error-message,
+.add-course-form .success-message {
+    color: goldenrod;
+    text-align: center;
+    margin-top: 1rem;
+}

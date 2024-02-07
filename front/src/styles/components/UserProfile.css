@@ -1,0 +1,52 @@
+/* UserProfile.css */
+
+.user-profile {
+    font-family: 'Teko', sans-serif;
+    background-color: rgba(0,0,0, 0.4); /* Semi-transparent black */
+    color: whitesmoke;
+    padding: 20px;
+    border-radius: 8px;
+    margin: auto;
+    width: 70%;
+}
+
+.user-profile h2 {
+    text-align: center;
+    color: goldenrod;
+    margin-bottom: 20px;
+}
+
+.user-profile p {
+    background-color: #797777; /* Gray background */
+    color: white;
+    border: 2px solid #494949; /* Dark gray border */
+    font-size: 1.2rem;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* If there are buttons or other elements, style them here */
+.user-profile button {
+    background-color: rgba(128, 128, 128, 0.39);
+    border: 2px solid goldenrod;
+    border-radius: 25px;
+    box-shadow: goldenrod 3px 3px 0 0;
+    color: goldenrod;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 32px;
+    padding: 4px 40px;
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 1rem auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .user-profile {
+        width: 90%;
+    }
+}

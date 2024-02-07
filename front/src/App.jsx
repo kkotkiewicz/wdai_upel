@@ -21,6 +21,8 @@ const App = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/user" element={<PersonalPage/>} />
           <Route path="/test" element={<TestPage />} />
+          <Route path="/about/:id" component={AboutPage} />
+          <Route path="/about/:id" component={AboutPage} />
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>
