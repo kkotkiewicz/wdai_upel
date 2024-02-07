@@ -1,8 +1,7 @@
-// UserProfile.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import '../styles/components/UserProfile.css'; // Załóżmy, że tutaj są Twoje style
+import '../styles/components/UserProfile.css';
 
 const UserProfile = () => {
     const [userData, setUserData] = useState(null);
@@ -25,7 +24,7 @@ const UserProfile = () => {
         fetchData();
     }, [id]);
 
-    if (loading) return <div className="loader">Ładowanie...</div>; // Tutaj możesz dodać animację ładowania
+    if (loading) return <div className="loader">Ładowanie...</div>;
 
     return (
         <div className="user-profile">

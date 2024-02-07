@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import '../styles/components/UserCourses.css'; // Assuming you have a CSS file for styling
+import '../styles/components/UserCourses.css';
 
 const UserCourses = () => {
     const [courses, setCourses] = useState([]);
@@ -14,7 +14,7 @@ const UserCourses = () => {
             setLoading(true);
             try {
                 const response = await axios.get(`http://your-backend.com/user/${id}`);
-                setCourses(response.data.courses); // Assuming the data has a 'courses' field
+                setCourses(response.data.courses);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -25,7 +25,7 @@ const UserCourses = () => {
         fetchData();
     }, [id]);
 
-    if (loading) return <div className="loader">Loading...</div>; // You can replace this with a styled loader
+    if (loading) return <div className="loader">Loading...</div>;
 
     return (
         <div className="user-courses">
@@ -33,7 +33,7 @@ const UserCourses = () => {
             {courses.length > 0 ? (
                 <ul>
                     {courses.map(course => (
-                        <li key={course._id}>{course.course_name}</li> // Replace '_id' and 'course_name' with your actual field names
+                        <li key={course._id}>{course.course_name}</li>
                     ))}
                 </ul>
             ) : (

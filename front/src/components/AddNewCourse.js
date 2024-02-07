@@ -1,14 +1,14 @@
 // AddNewCourse.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../styles/components/AddNewCourse.css'; // Import the CSS file for styling
+import '../styles/components/AddNewCourse.css';
 
 const AddNewCourse = () => {
     const [courseData, setCourseData] = useState({
         course_name: '',
         course_instructor: '',
         course_description: '',
-        // course_photos: [],
+        course_photos: [],
         course_category: '',
         course_price: ''
     });
@@ -71,12 +71,12 @@ const AddNewCourse = () => {
                     onChange={handleChange}
                     required
                 />
-                {/*<input*/}
-                {/*    type="file"*/}
-                {/*    name="course_photos"*/}
-                {/*    onChange={handleChange}*/}
-                {/*    multiple*/}
-                {/*/>*/}
+                <input
+                    type="file"
+                    name="course_photos"
+                    onChange={handleChange}
+                    multiple
+                />
                 <input
                     type="text"
                     name="course_category"
