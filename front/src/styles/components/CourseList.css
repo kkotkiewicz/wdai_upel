@@ -69,6 +69,8 @@
     z-index: 0;
 }
 .rating-wrapper p {
+    color: whitesmoke;
+    font-family: 'Teko', sans-serif;
     font-size: 1.4rem;
     margin: 0;
     padding: 4px;

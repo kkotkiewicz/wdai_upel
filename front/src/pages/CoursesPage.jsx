@@ -3,6 +3,8 @@ import '../styles/pages/CoursesPage.css';
 import '../styles/components/CourseList.css';
 import { CourseList } from '../components/CourseList';
 import { NavigationBar } from '../components/NavigationBar';
+import shoppingCart from "../components/ShoppingCart";
+import ShoppingCart from "../components/ShoppingCart";
 
 function Courses() {
     const [courses, setCourses] = useState([]);
@@ -12,6 +14,9 @@ function Courses() {
     const [showFilters, setShowFilters] = useState(false);
     const [lowerPriceFilter, setLowerPriceFilter] = useState(0);
     const [higherPriceFilter, setHigherPriceFilter] = useState(999);
+    const [ratingFilter, setRatingFilter] = useState(0);
+    const [shoppingCart, setShoppingCart] = useState([]);
+    const [cart, setOpenCart] = useState(false);
 
     const fetchCourses = () => {
         fetch('http://localhost:3000/course')
@@ -27,11 +32,24 @@ function Courses() {
         setFilteredCourses(courses);
     }, [courses]);
 
+    const handleAddToCart = (course) => {
+        setShoppingCart([...shoppingCart, course]);
+    };
+    const handleRemoveFromCart = (course) => {
+        const newShoppingCart = shoppingCart.filter(cartCourse => cartCourse.id !== course.id);
+        setShoppingCart(newShoppingCart);
+    }
     const openFilters = () => {
         setShowFilters(true);
     };
     const closeFilters = () => {
         setShowFilters(false);
+    };
+    const openCart = () => {
+        setOpenCart(true);
+    };
+    const closeCart = () => {
+        setOpenCart(false);
     };
     // modify this code to make filters work only when button is pressed
     const applyFilters = () => {
@@ -58,7 +76,7 @@ function Courses() {
     return (
         <>
             <div className="background-img" />
-            <NavigationBar activeSite={"CoursePage"} />
+            <NavigationBar activeSite={"CoursePage"} openCart={openCart}/>
             <div className="Courses">
                 <div className="search-bar">
                     <p> Wyszukaj: </p>
@@ -100,12 +118,12 @@ function Courses() {
                 </div>
                 <div className={"list-wrapper"}>
                     {filteredCourses.map(course => (
-                        <CourseList key={course.id} courseData={course} />
+                        <CourseList key={course.id} courseData={course} addToCart={handleAddToCart}/>
                     ))}
                 </div>
-                <div className={"pages"}>
-
-                </div>
+                {cart && (
+                    <ShoppingCart shoppingCart={shoppingCart} closeCart={closeCart} deleteFromCart={handleRemoveFromCart}/>
+                )}
             </div>
         </>
     );

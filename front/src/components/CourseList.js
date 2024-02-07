@@ -1,6 +1,6 @@
 import React from 'react';
 import {Rating} from './Rating';
-export const CourseList = ({ courseData }) => {
+export const CourseList = ({ courseData, addToCart}) => {
     return (
         <div className="list-element">
             <div className="list-element-img">
@@ -18,7 +18,7 @@ export const CourseList = ({ courseData }) => {
                         <Rating averageRating={courseData.rating_avg} />
                     </div>
                     <div className={"list-element-buttons"}>
-                        <button className={"list-element-button"}>Szczegóły</button>
+                        <button className={"list-element-button"} onClick={() => addToCart(courseData)}>Zapisz się</button>
                     </div>
                 </div>
             </div>

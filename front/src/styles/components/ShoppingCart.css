@@ -1,0 +1,22 @@
+.shopping-cart {
+    color: whitesmoke;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0,0,0, 0.9);
+    padding: 20px;
+    border: 1px solid #ddd;
+    z-index: 2;
+    border-radius: 8%;
+}
+.shopping-cart h2 {
+    font-size: 58px;
+    color: whitesmoke;
+    font-family: 'Teko', sans-serif;
+    text-align: center;
+}
+.item {
+    display: flex;
+    flex-direction: row;
+}

@@ -14,7 +14,6 @@ body {
     top: 0;
     font-family: 'Teko', sans-serif;
     z-index: 5;
-    justify-content: space-between;
     align-content: center;
 }
 .logo {
@@ -25,28 +24,33 @@ body {
     width: 250px;
     height: auto;
 }
-.navigation-bar div {
+.options {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    padding: 0;
+}
+.options div {
+    cursor: pointer;
     font-size: 1.8rem;
     text-decoration: none;
     height: 100%;
     line-height: 200%;
     color: lightgray;
-    margin: 0;
     padding: 0;
     border-radius: 20px;
+    margin-right: 20px;
 }
-.navigation-bar div:hover {
+.options div:hover {
     background-color: lightgray;
     color: black;
     font-weight: bold;
     transition: 0.3s ease;
 }
 
-#user-cart{
-    background-color: #2a2828;
-}
-
-.navigation-bar div.active {
+.options div.active {
     border-bottom: 3px solid goldenrod;
 }
 .user {
@@ -56,10 +60,26 @@ body {
 .user-avatar {
     margin-left: 48vw;
 }
+.user-avatar img:hover {
+    transition: 0.4s ease;
+    border-radius: 20%;
+    cursor: pointer;
+}
 .user-avatar img {
-    margin-top: 5px;
     width: 55px;
     height: 55px;
     border: 2px solid goldenrod;
     border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+#user-cart img {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+#user-cart img:hover {
+    transition: 0.4s ease;
+    cursor: pointer;
 }
