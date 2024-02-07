@@ -14,7 +14,7 @@ const UserCourses = () => {
             setLoading(true);
             try {
                 const response = await axios.get(`http://localhost:3000/user/${id}`);
-                setCourses(response.data); // Assuming the data has a 'courses' field
+                setCourses(response.data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -25,7 +25,7 @@ const UserCourses = () => {
         fetchData();
     }, [id]);
 
-    if (loading) return <div className="loader">Loading...</div>; // You can replace this with a styled loader
+    if (loading) return <div className="loader">Loading...</div>;
 
     return (
         <div className="user-courses">
@@ -33,7 +33,7 @@ const UserCourses = () => {
             {courses.length > 0 ? (
                 <ul>
                     {courses.map(course => (
-                        <li key={course._id}>{course.course_name}</li> // Replace '_id' and 'course_name' with your actual field names
+                        <li key={course._id}>{course.course_name}</li>
                     ))}
                 </ul>
             ) : (
