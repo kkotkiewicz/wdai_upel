@@ -13,7 +13,7 @@ const UserProfile = () => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://twoj-backend.com/user/${id}`);
+                const response = await axios.get(`http://localhost:3000/user`);
                 setUserData(response.data);
                 setLoading(false);
             } catch (error) {
